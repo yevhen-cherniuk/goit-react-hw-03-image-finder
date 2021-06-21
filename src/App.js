@@ -41,7 +41,10 @@ export class App extends Component {
     const { currentPage, searchQuery } = this.state;
     const options = { currentPage, searchQuery };
 
-    this.setState({ isLoading: true });
+    this.setState({
+      isLoading: true,
+      scrollHeight: document.body.scrollHeight - 150,
+    });
 
     fetchImages(options)
       .then((images) => {
@@ -54,7 +57,7 @@ export class App extends Component {
       .finally(() => {
         this.setState({ isLoading: false });
         window.scrollTo({
-          top: document.querySelector("#imageGallery").scrollHeight,
+          top: this.state.scrollHeight,
           behavior: "smooth",
         });
       });
